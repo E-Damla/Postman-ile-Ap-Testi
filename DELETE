@@ -1,0 +1,32 @@
+
+var jsonData = pm.response.json();
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});
+responseJson = JSON.parse(responseBody);
+  var a=[];
+var list = (responseJson.result).length;
+console.log(list);
+   for (var i = 0; i < list; i++) 
+    {
+    var counter = responseJson.result[i];
+    schID=counter.status
+
+    a.push(schID)
+    }
+    a= JSON.stringify(a)
+    postman.setEnvironmentVariable("schID", a);
+
+//let jsonData = pm.response.json()
+
+pm.test('Successful delete status response', () => {
+    _.each(jsonData.result, (item) => {
+        console.log(item);
+        pm.expect(item.status).to.equals(true);
+    })
+})
