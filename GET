@@ -1,0 +1,48 @@
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});
+
+const resBody = pm.response.json();
+pm.test("Response Property", function () {
+    pm.expect(resBody.buzzer_list[0]).to.have.ownProperty('name');
+});
+var jsonData = pm.response.json();
+pm.test("Request Success 2", function () {
+    var getId = jsonData.buzzer_list.length - 1;
+    pm.environment.set("urid", jsonData.buzzer_list[getId]);
+   console.log(getId);
+
+    pm.expect(jsonData.buzzer_list[getId].ip).to.eql('3.3.3.3');
+    pm.expect(jsonData.buzzer_list[getId].name).to.eql('deneme_buzzer');
+    pm.expect(jsonData.buzzer_list[getId].port).to.eql(23);
+    pm.expect(jsonData.buzzer_list[getId].connection_type).to.eql('TCP');
+    pm.expect(jsonData.buzzer_list[getId].is_deleted).is.to.equals(false);
+});
+var myObj= pm.response.json(); 
+for (i in myObj.buzzer_list) 
+{x = myObj.buzzer_list[i];
+    console.log(x);}
+if ( myObj.buzzer_list[i].is_deleted === true){  
+    console.log("isDeleted TRUE")}
+else {
+    console.log("isDeleted FALSE")} ;
+
+for (i in myObj.buzzer_list) 
+{x = myObj.buzzer_list[i].id;
+const array1 = [x];
+const arr2 = [22,23,26,] // Kontrol Edilecek ID'ler
+var bool = true
+for(let j = 0; j < arr2.length; j++){
+  if(array1.includes(arr2[j]) === false){
+      bool =  false
+  }
+  else{
+  	bool =  true
+        }
+    }
+}
+console.log("idList " + bool)
